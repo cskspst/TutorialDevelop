@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+label {
+    display: inline-block;
+    width: 8em;
+    line-height: 150%;
+}
+
+/* 開始:追加:Lesson 18 Chapter 10 */
+.err {
+    color: red;
+}
+/* 終了:追加:Lesson 18 Chapter 10 */
