@@ -8,9 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.techacademy.entity.User;
 
-// [カリキュラムから]
-//  このクラスは認証処理に必要な処理を記述する
-//  UserDetailsインターフェースを実装している
 public class UserDetail implements UserDetails {
     private static final long serialVersionUID = 1L;
 

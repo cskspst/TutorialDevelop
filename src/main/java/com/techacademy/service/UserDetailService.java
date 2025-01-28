@@ -10,13 +10,6 @@ import org.springframework.stereotype.Service;
 import com.techacademy.entity.Authentication;
 import com.techacademy.repository.AuthenticationRepository;
 
-// [カリキュラムから]
-// このクラスは認証処理に使用するユーザ情報を作成する
-// 大まかな流れ;
-// usernameをもとに認証リポジトリからエンティティを検索する
-// 対象のエンティティが存在しない場合は例外を投げる
-// 存在すれば認証エンティティに含まれるUserエンティティをもとにUserDetailオブジェクトを作成して返す
-// なお返す先はSpring Secutiryである
 @Service
 public class UserDetailService implements UserDetailsService {
     private final AuthenticationRepository authenticationRepository;
