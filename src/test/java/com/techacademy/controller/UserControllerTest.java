@@ -1,5 +1,7 @@
 package com.techacademy.controller;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -26,8 +28,6 @@ import com.techacademy.entity.User;
 @AutoConfigureMockMvc
 @ExtendWith(SpringExtension.class)
 class UserControllerTest {
-    // [カリキュラムから]
-    // MockMvc:HTTPリクエストを疑似的に再現するクラス
     private MockMvc mockMvc;
 
     private final WebApplicationContext webApplicationContext;
@@ -38,10 +38,6 @@ class UserControllerTest {
 
     @BeforeEach
     void beforeEach() {
-        // Spring Securityを有効にする
-        // [カリキュラムから]
-        // @BeforeEachアノテーションは各テストの前に処理を実行することを示す
-        // ここではSpring Securityを使用しているためこれを有効化している
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(webApplicationContext)
                 .apply(springSecurity()).build();
@@ -66,4 +62,37 @@ class UserControllerTest {
         assertEquals("キラメキ太郎",user.getName());
     }
 
+    // 開始:課題追加部分
+    @Test
+    @DisplayName("User一覧画面")
+    @WithMockUser
+    void testGetList() throws Exception {
+        MvcResult result = mockMvc.perform(get("/user/list"))
+            .andExpect(status().isOk())
+            .andExpect(model().attributeExists("userlist"))
+            .andExpect(model().hasNoErrors())
+            .andExpect(view().name("user/list"))
+            .andReturn();
+
+        // userlistの検証
+        // Modelからuserlistを取り出す(userlistはUser型を要素に持つList)
+        List<User> userlist = (List<User>)result.getModelAndView().getModel().get("userlist");
+        // userlistの要素数が3であることの検証
+        assertEquals(3,userlist.size());
+        // userlistの各要素に対しidとnameを取り出し、各々が正しいか検証
+        userlist.forEach(user -> {
+            switch (user.getId()) {
+            case 1:
+                assertEquals("キラメキ太郎",user.getName());
+                break;
+            case 2:
+                assertEquals("キラメキ次郎",user.getName());
+                break;
+            case 3:
+                assertEquals("キラメキ花子",user.getName());
+                break;
+            }
+        });
+    }
+    // 終了:課題追加部分
 }

@@ -17,12 +17,6 @@
         <select th:field="*{gender}" th:errorclass="err">
             <option value="" th:text="選択してください">
             <option th:each="item:${T(com.techacademy.entity.User.Gender).values()}" th:value="${item}" th:text="${item}">
-            <!--
-                [カリキュラムから]
-                th:eachは属性値に入っている値を繰り返し出力する
-                T(...)はThymeleafでJavaのStatic変数やStaticメソッドを呼び出す
-                Genderは列挙型のためvaluesメソッドを呼び出して定義された列挙子を全て取得できる
-            -->
         </select>
         <span th:errors="*{gender}" class="err"></span>
         <br>

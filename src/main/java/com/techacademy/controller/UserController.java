@@ -25,7 +25,7 @@ public class UserController {
 
     /** 一覧画面を表示 */
     @GetMapping("/list")
-    public String GetList(Model model) {
+    public String getList(Model model) {
         // 全件検索結果をModelに登録
         model.addAttribute("userlist", service.getUserList());
         // user/list.htmlに遷移
@@ -52,16 +52,25 @@ public class UserController {
 
     /** User更新画面を表示 */
     @GetMapping("/update/{id}/")
-    public String getUser(@PathVariable("id") Integer id, Model model) {
-        // Modelに登録
-        model.addAttribute("user",service.getUser(id));
-        // User更新画面に遷移
-        return "user/update";
+    public String getUser(@PathVariable("id") Integer id, User user, Model model) {
+        if(id != null ) {
+            // Modelに登録
+            model.addAttribute("user",service.getUser(id));
+            // User更新画面に遷移
+            return "user/update";
+        } else {
+            model.addAttribute(user);
+            return "user/update";
+        }
     }
 
     /** User更新処理 */
     @PostMapping("/update/{id}/")
-    public String postUser(User user) {
+    public String postUser(@Validated User user, BindingResult res, Model model) {
+    // public String postUser(User user) {
+        if(res.hasErrors()) {
+            return getUser(null, user, model);
+        }
         // User登録
         service.saveUser(user);
         // 一覧画面にリダイレクト

@@ -26,31 +26,22 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    // 開始:追加:Lesson 18 Chapter 8
     /** Userを1件検索して返す */
     public User getUser(Integer id) {
         return userRepository.findById(id).get();
     }
-    // 終了:追加:Lesson 18 Chapter 8
 
-    // 開始:追加:Lesson 18 Chapter 7
     /** Userの登録を行う */
     @Transactional
     public User saveUser(User user) {
         return userRepository.save(user);
     }
-    // 終了:追加:Lesson 18 Chapter 7
 
-    // 開始:追加:Lesson 18 Chapter 9
     @Transactional
     public void deleteUser(Set<Integer> idck) {
-    // [カリキュラムから]
-    // 削除するUserは複数選択できるためそのコレクションSet idckを
-    // for eachで１件ずつ取り出してdeleteByIdメソッドで削除する
         for(Integer id : idck) {
             userRepository.deleteById(id);
         }
     }
-    // 終了:追加:Lesson 18 Chapter 9
 
 }
